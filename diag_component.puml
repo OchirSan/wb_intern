@@ -1,0 +1,16 @@
+@startuml
+
+package "Team" {
+[carry]
+[support]
+[ruiner]
+}
+[team]
+[team] --> carryInterface
+carryInterface -- carry
+[team] --> supportInterface
+supportInterface -- support
+[team] --> ruinerInterface
+ruinerInterface -- ruiner
+
+@enduml
