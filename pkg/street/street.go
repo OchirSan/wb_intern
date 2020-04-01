@@ -2,12 +2,12 @@ package street
 
 import "fmt"
 
-type Street interface {
+// Define interface for house, bank, factory
+type element interface {
 	Accept(Visitor) string
 }
 
-// Define interface for house, bank, factory
-type element interface {
+type Street interface {
 	Accept(Visitor) string
 }
 
