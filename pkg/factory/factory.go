@@ -1,11 +1,36 @@
 package factory
 
-import (
-	"fmt"
-)
+type visitorInterface interface {
+	VisitHouse(houseInterface) string
+	VisitBank(bankInterface) string
+	VisitFactory(factoryInterface) string
+	VisitStreet(streetInterface) string
+}
+
+type visitor struct{}
+
+type houseInterface interface {
+	GetName() string
+	GetFinancialCondition() int
+	GetPrudency() bool
+}
+
+type bankInterface interface {
+	GetName() string
+	GetIsHadIndurance() bool
+}
 
 type factoryInterface interface {
-	VisitFactory() string
+	GetName() string
+	GetIsHadDanger() bool
+}
+
+type streetInterface interface {
+	GetName() string
+	GetHouse() houseInterface
+	GetBank() bankInterface
+	GetFactory() factoryInterface
+	Accept(v visitorInterface) string
 }
 
 type factory struct {
@@ -13,20 +38,17 @@ type factory struct {
 	IsHadDanger bool
 }
 
-// Accept visitor in factory
-func Accept(f factoryInterface) string {
-	return f.VisitFactory()
+// Accept visitor at factory
+func (factory factory) Accept(v visitorInterface) string {
+	return v.VisitFactory(&factory)
 }
 
-// Visitor visit factory
-func (factory factory) VisitFactory() string {
-	res := fmt.Sprintln("visiting", factory.name, "house and offer fire and flood insurance")
-	if factory.IsHadDanger {
-		res += fmt.Sprintln("accept visitor")
-	} else {
-		res += fmt.Sprintln("kick off visitor")
-	}
-	return res
+func (f *factory) GetName() string {
+	return f.name
+}
+
+func (f *factory) GetIsHadDanger() bool {
+	return f.IsHadDanger
 }
 
 // Create new factory
