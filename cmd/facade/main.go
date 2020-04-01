@@ -1,13 +1,16 @@
 package main
 
 import (
-	"pkg/carry"
-	"pkg/ruiner"
-	"pkg/support"
-	"pkg/team"
+	"github.com/OchirSan/wb_intern/pkg/carry"
+	"github.com/OchirSan/wb_intern/pkg/support"
+	"github.com/OchirSan/wb_intern/pkg/ruiner"
+	"github.com/OchirSan/wb_intern/pkg/team"
 )
 
 func main(){
-	T := team.NewTeam(carry.NewCarry(), support.NewSupport(), ruiner.NewRuiner())
-	T.PlayTheGame()
+	carry:= carry.NewCarry("artur")
+	support := support.NewSupport("merlin", true)
+	ruiner := ruiner.NewRuiner("ron")
+	team := team.NewTeam(carry, support, ruiner)
+	team.PlayTheGame(60)
 }
