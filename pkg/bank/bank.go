@@ -1,30 +1,54 @@
 package bank
 
-import "fmt"
+type visitorInterface interface {
+	VisitHouse(houseInterface) string
+	VisitBank(bankInterface) string
+	VisitFactory(factoryInterface) string
+	VisitStreet(streetInterface) string
+}
+
+type visitor struct{}
+
+type houseInterface interface {
+	GetName() string
+	GetFinancialCondition() int
+	GetPrudency() bool
+}
 
 type bankInterface interface {
-	VisitBank() string
+	GetName() string
+	GetIsHadIndurance() bool
 }
 
-// Accept visitor in bank
-func Accept(b bankInterface) string {
-	return b.VisitBank()
+type factoryInterface interface {
+	GetName() string
+	GetIsHadDanger() bool
 }
 
-// Visitor visit bank
-func (bank bank) VisitBank() string {
-	res := fmt.Sprintln("visiting", bank.name, "house and offer robbery insurance")
-	if bank.IsHadInsurance {
-		res += fmt.Sprintln("accept visitor")
-	} else {
-		res += fmt.Sprintln("kick off visitor")
-	}
-	return res
+type streetInterface interface {
+	GetName() string
+	GetHouse() houseInterface
+	GetBank() bankInterface
+	GetFactory() factoryInterface
+	Accept(v visitorInterface) string
+}
+
+// Accept visitor at bank
+func (bank bank) Accept(v visitorInterface) string {
+	return v.VisitBank(&bank)
 }
 
 type bank struct {
 	name           string
 	IsHadInsurance bool
+}
+
+func (b *bank) GetName() string {
+	return b.name
+}
+
+func (b *bank) GetIsHadIndurance() bool {
+	return b.IsHadInsurance
 }
 
 // Create new bank
