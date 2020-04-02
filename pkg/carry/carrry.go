@@ -5,20 +5,21 @@ import (
 )
 
 type carryInterface interface {
-	KillEnemy(string);
+	KillEnemy();
 }
 
 type carry struct{
 	name string;
-	IsBuffed bool;
 }
 
-//Win the game
-func (c carry) KillEnemy(name string) {
-	fmt.Println(name, "убивает врага")
+// Win the game
+func (c carry) KillEnemy() {
+	fmt.Println(c.name, "убивает врага")
 }
 
-//Creates new carry
-func NewCarry() carryInterface {
-	return &carry{}
+// Creates new carry
+func NewCarry(name string) carryInterface {
+	return &carry{
+		name: 	name,
+	}
 }

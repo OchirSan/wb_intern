@@ -1,27 +1,31 @@
 package support
 
-import (
-	"fmt"
-	"math/rand"
-	"time"
-)
+import "fmt"
 
 type supportInterface interface {
-	Buff(string) int;
+	Buff() bool
 }
 
-type support struct{
-	name string;
+type support struct {
+	name      string
+	WhoBuffed bool
 }
 
-//Support buff random hero
-func (s support) Buff(name string) int {
-	rand.Seed(time.Now().UTC().UnixNano())
-	fmt.Println(name, "бафает случайного героя")
-	return rand.Intn(2);
+// Support buff random hero
+func (s support) Buff() bool {
+	buff := s.WhoBuffed
+	if buff == false {
+		fmt.Println(s.name, "бафает керри")
+	} else {
+		fmt.Println(s.name, "бафает руинера")
+	}
+	return buff
 }
 
-//Creates a new support
-func NewSupport() supportInterface {
-	return &support{}
+// Creates a new support
+func NewSupport(name string, WhoBuffed bool) supportInterface {
+	return &support{
+		name:      name,
+		WhoBuffed: WhoBuffed,
+	}
 }
