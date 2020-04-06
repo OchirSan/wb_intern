@@ -4,6 +4,9 @@ type dishInterface interface {
 	SetMeat(string)
 	SetGarnish(string)
 	ShowDish()
+	GetMeat() int
+	GetGarnish() int
+	IsItDish() string
 }
 
 type Pilaf interface {
